@@ -20,7 +20,7 @@ grep -E -o '^[^#[:space:]]+:' "${makefile}" | sed 's/://' > /tmp/targets
 while read -r target; do
 	printf "Checking target %s...\n" "${target}"
 	# make -n "${target}"
-	printf "%s\n" "${shebang}" > /tmp/shakecheck
+  printf "%s\n" "${shebang}" > /tmp/shakecheck
 	make -n "${target}" >> /tmp/shakecheck
 	shellcheck --exclude=SC2096 /tmp/shakecheck
 	# printf "\n"
