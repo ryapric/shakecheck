@@ -18,10 +18,10 @@ grep -E -o '^[^#[:space:]]+:' "${makefile}" | sed 's/://' > /tmp/targets
 # globally, since you may have `set` global shell options in your SHELL Make
 # variable (I mean... I do this)
 while read -r target; do
-	printf "Checking target %s...\n" "${target}"
-	# make -n "${target}"
+  printf "Checking target %s...\n" "${target}"
+  # make -n "${target}"
   printf "%s\n" "${shebang}" > /tmp/shakecheck
-	make -n "${target}" >> /tmp/shakecheck
-	shellcheck --exclude=SC2096 /tmp/shakecheck
-	# printf "\n"
+  make -n "${target}" >> /tmp/shakecheck
+  shellcheck --exclude=SC2096 /tmp/shakecheck
+  # printf "\n"
 done < /tmp/targets
