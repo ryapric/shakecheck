@@ -7,7 +7,13 @@ printf ">Checking Makefile at %s...\n" "$(realpath "${makefile}")"
 
 # Grab the defined shell -- users are expected to have set a SHELL, else
 # shakecheck will not run
-shell=$(grep -E '^SHELL' "${makefile}" | grep -o '/.*')
+shell=$(
+  grep -E '^SHELL' "${makefile}" \
+  | grep -o '/.*' \
+) || {
+  printf "ERROR: Makefiles must define a SHELL Make variable for shakecheck to work!\n" > /dev/stderr
+  exit 1
+}
 
 # Build shebang for the implied shell script
 shebang="#!${shell}"
